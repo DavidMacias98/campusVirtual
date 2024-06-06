@@ -1,0 +1,132 @@
+
+<div class="txt" style="background-color: #0a4863ff; width: max-content; padding: 5px; border-radius: 4px; color: white; margin-bottom: 1%" mat-raised- mat-button>
+    SOLICITUD DE INGRESO DE ESTUDIANTE
+</div>
+<div class="column"> 
+        <mat-stepper [linear]="isLinear" [orientation]="getStepperOrientation()" [linear]="isLinear" #stepper>
+            <!-- Contenido de los pasos -->
+            <mat-step>
+                <form>
+                    <ng-template matStepLabel>REGISTRO DE ESTUDIANTE</ng-template>
+
+                    <span (click)="openDialog()" class=" txt"
+                        style="display: flex;flex-direction: row; gap: 10px; width: max-contentwa;">TODOS LOS DATOS
+                        DEBEN SER DEL ESTUDIANTE
+                    </span>
+
+                    <div class="row">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Numero de documento</mat-label>
+                            <input #name type="text" matInput placeholder="">
+                        </mat-form-field>
+
+
+                    </div>
+
+                    <form class="example-form column">
+
+                        <div class="row">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Nombres</mat-label>
+                                <input #name type="text" matInput placeholder="">
+                            </mat-form-field>
+
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Apellidos</mat-label>
+                                <input #ape type="text" matInput placeholder="">
+                            </mat-form-field>
+
+
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Correo</mat-label>
+                                <input #name type="text" matInput placeholder="">
+                            </mat-form-field>
+
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Contraseña</mat-label>
+                                <input #ape type="text" matInput placeholder="">
+                            </mat-form-field>
+                        </div>
+                    </form>
+
+
+
+                    <div>
+                        <button mat-button matStepperNext>SIGUIENTE</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <form>
+                    <ng-template matStepLabel>DOCUMENTOS</ng-template>
+
+                    <div class="glassbox row">
+
+                        <form class="example-form row">
+
+                            <div style="display: flex; justify-content: center;align-items: center; width:100%; ">
+                                <div class="container-input">
+                                    <input type="file" name="file-7" id="file-7" class="inputfile inputfile-7"
+                                        (input)="onFile($event,0);" />
+                                    <label
+                                        style="background-color: rgb(214, 209, 209); color: black; border-radius: 4px; width: 100%;"
+                                        for="file-7" placeholder="Cargar Documento">
+                                        <span class="iborrainputfile">{{nombreDocIde}}</span>
+                                        <div class="icoUpload"></div>
+                                        <strong class="img-load">
+                                            <img class="ico_load" src="/assets/images/investor/download.png" alt="">
+                                        </strong>
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <div style="display: flex; justify-content: center;align-items: center; width:100%; ">
+                                <div class="container-input">
+                                    <input type="file" name="fileVac" id="fileVac" class="inputfile inputfile-7"
+                                        (input)="onFile($event,1);" />
+                                    <label
+                                        style="background-color: rgb(214, 209, 209); color: black; border-radius: 4px; width: 100%;"
+                                        for="fileVac" placeholder="Cargar Documento">
+                                        <span class="iborrainputfile">{{nombreDocVac}}</span>
+                                        <div class="icoUpload"></div>
+                                        <strong class="img-load">
+                                            <img class="ico_load" src="/assets/images/investor/download.png" alt="">
+                                        </strong>
+                                    </label>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                    <div>
+                        <button mat-button matStepperPrevious>REGRESAR</button>
+                        <button mat-button matStepperNext>SIGUIENTE</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>TERMINOS</ng-template>
+
+
+                <button (click)="cargarStudent()" mat-button>CARGAR ESTUDIANTE</button>
+
+                <div>
+                    <button mat-button matStepperPrevious>REGRESAR</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                </div>
+            </mat-step>
+        </mat-stepper>
+
+    
+
+
+
+
+
+
+
+</div>

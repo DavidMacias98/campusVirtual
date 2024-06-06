@@ -1,0 +1,28 @@
+<div class="glassbox">
+
+    <div class="glassbox">
+        DOCUMENTOS DEL ESTUDIANTE
+    </div>
+    <div class=" row ">
+        <a href="{{data.student.imgDoc}}" download="CEDULA_{{data.student.id}}" class="column glassbox">
+            <img class="icoDownload">
+            CEDULA DE IDENTIDAD 
+        </a>
+
+        <a href="{{data.student.imgVac}}" download="CERT_VACUNACION_{{data.student.id}}"class="column glassbox">
+            <img class="icoDownload">
+            CERTIFICADO DE VACUNACION
+        </a>
+        <a class="column glassbox">
+            <img class="icoDownload">
+            CERTIFICADO DE APROBACION
+
+        </a>
+
+    </div>
+
+    <div (click)="cerrar()" class="glassbox">
+        <button>OK</button>
+    </div>
+
+</div>

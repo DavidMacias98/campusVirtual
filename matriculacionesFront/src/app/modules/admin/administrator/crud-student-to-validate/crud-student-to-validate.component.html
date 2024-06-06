@@ -1,0 +1,71 @@
+<div class="glassbox txt row" style="width: 100%; margin-bottom: 1%;">
+   SOLICITUDES DE ESTUDIANTES
+</div>
+
+
+        <div style=" display: flex; flex-direction: row; width: 100%;">
+            <div style="width: 50% ; display: flex;">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Buscar</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Name" value="">
+                </mat-form-field>
+            </div>
+        </div>
+
+
+
+        <div style="width: max-content;;">
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons #paginator
+                aria-label="Select page of periodic elements">
+            </mat-paginator>
+        </div>
+        <table mat-table [dataSource]="newstudents" class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> NOMBRE </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="ape">
+                <th mat-header-cell *matHeaderCellDef> APELLIDO </th>
+                <td mat-cell *matCellDef="let element"> {{element.ape}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="whatsapp">
+                <th mat-header-cell *matHeaderCellDef>  #REPRESENTANTE</th>
+                <td mat-cell *matCellDef="let element"> {{element.idRepre.whatsapp}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="usser">
+                <th mat-header-cell *matHeaderCellDef> USUARIO </th>
+                <td mat-cell *matCellDef="let element"> {{element.usser}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="documentos">
+                <th mat-header-cell *matHeaderCellDef> DOCUMENTOS </th>
+                <td mat-cell *matCellDef="let element">  <button (click)="OpenModalDocuments(element)"
+                    class="scalar glassbox" style="display: flex; flex-direction: row;width: max-content;  gap: 5px;" >Documentos<button  class=" icoFolderOpen" ></button></button></td>
+            </ng-container>
+
+            <ng-container matColumnDef="accion">
+                <th mat-header-cell *matHeaderCellDef> VALIDAR </th>
+                <td mat-cell *matCellDef="let element"  > 
+                    <button (click)="openModalValidateStudent(element.id)"
+                    style="margin-right: 3%;" class="scalar icoSucces" ></button>
+                    <button  class="icoError scalar" ></button>
+                </td>
+            </ng-container>
+            
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
