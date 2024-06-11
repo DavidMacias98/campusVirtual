@@ -61,6 +61,15 @@ public class CuentaServiceImpl implements CuentaService {
 		return op.get();
 	}
 	
+	
+	
+	@Override
+	public WebUser findByDocument(String document)throws Exception {
+	WebUser user = this.cuentaRepo.findByDocument(document);
+		
+		return user;
+	}
+	
 //	@Override
 //	public WebUserAddress addAddress(WebUserAddress address)throws Exception {
 //	Optional<WebUser>op = this.cuentaRepo.findById((Long.parseLong(address.getUsser())));

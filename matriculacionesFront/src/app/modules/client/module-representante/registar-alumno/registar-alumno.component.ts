@@ -1,7 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 })
 export class RegistarAlumnoComponent {
   dataSource: any
-  commitStudent:any
+  commitStudent: any
   _opennu: any
   sesion: any
   students: any
@@ -25,9 +25,19 @@ export class RegistarAlumnoComponent {
   orientation: StepperOrientation = 'horizontal';
   fileDocument: any
   fileVac: any
-  user:any
+  filePhoto: any
+  user: any
   nombreDocIde: string = "Cargar Cedula"
   nombreDocVac: string = "Carnet de vacunaciones"
+  nombrePhoto: string = "Cargar foto de perfil"
+  infoVigente = false
+  terminosycondiciones = false;
+  studentValidator= false
+
+  firstFormGroup = this._formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+
   @ViewChild('stepper') stepper!: MatStepper;
 
   ngOnInit(): void {
@@ -81,43 +91,126 @@ export class RegistarAlumnoComponent {
 
   }
 
-  
 
 
 
 
 
-  upload(idStudent:any) {
 
-    if(this.fileDocument==null ||this.fileVac==null){
-      Swal.fire({
-        title: 'Error!',
-        text: "Error debe cargar los 2 documentos",
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-      return;
-    }
-    console.log("idstduene",idStudent)
+
+
+
+
+
+
+
+  getStepperOrientation(): StepperOrientation {
+
+    console.log("get ", this.orientation)
+    return this.orientation;
+  }
+
+
+  getStudents() {
     const formData = new FormData();
-
-    formData.append('fileDoc', this.fileDocument);
-    formData.append('fileVac', this.fileVac);
-    formData.append('iduser',idStudent);
-    this.publicServices.uploadDocMatricula(formData).subscribe((data: any) => {
-    this.getStudents();
-      Swal.fire(
-        'Exito!',
-        'Documentos cargados!',
-        'success'
-      )
-    }, (error: Error) => {
-  
-      console.log(error.message)
-    }, () => { }
+    formData.append("idRepre", this.sesion.id)
+    this.repreService.getStudents(formData).subscribe((data: any) => {
+      this.dataSource = new MatTableDataSource(data);
+      console.log(this.dataSource);
+    }
     );
   }
-  
+
+
+
+  openDialog() {
+    const dialogRef = this.dialog.open(RegisterComponent, {
+      data: { bandera: "newstudent", idRepre: this.sesion.id, rol: "student" },
+      panelClass: 'glassbox', disableClose: true
+    });
+    dialogRef.componentInstance.eventoHijo.subscribe(() => {
+      // Llamar al método o proceso en el componente padre
+      this.getStudents();
+    });
+  }
+  modalRegister() {
+    this._opennu = true
+  }
+
+
+
+  validarStudent(documento: any) {
+
+  if(documento==""){
+          Swal.fire({
+            icon: 'error',
+            title: "Ha ocurrido un error",
+            text: "Debe ingresar un numero de documento.",
+          })
+          return
+        }
+    const formData = new FormData();
+    formData.append("document", documento)
+    this.publicServices.validatedStudent(formData).subscribe(
+      (data: any) => {
+        if(data!=null){
+          Swal.fire({
+            icon: 'error',
+            title: "Ha ocurrido un error",
+            text: "Estudiente ya se encuentra registrado.",
+          })
+        }else{
+          this.studentValidator = true
+        }
+        
+      }
+    )
+  }
+
+
+
+
+  putStudent() {
+    this.publicServices.addUser(this.user).subscribe((data: any) => {
+      Swal.fire(
+        'Exito!',
+        'Solicitud de ingreso de estudiante exitosa!',
+        'success'
+      ).then(() => {
+        this.uploadPhotoProfile();
+        this.uploadDocuments(this.user.id);
+
+      })
+
+    }, (error: Error) => {
+      Swal.fire({
+        icon: 'error',
+        title: "Ha ocurrido un error",
+        text: error.message,
+      }).then(() => {
+
+      })
+    }, () => { }
+    );
+
+  }
+
+  SetUser(name: any, ape: any, correo: any, pass: any, documento: any) {
+    this.user = {
+      id: documento,
+      document: documento,
+      name: name,
+      ape: ape,
+      pass: pass,
+      usser: correo,
+      whatsapp: this.sesion.whatsapp,
+      activo: true,
+      rol: 'student',
+      idRepre: { "id": this.sesion.id }
+    }
+    console.log(this.user)
+  }
+
 
 
   onFile(event: any, doc: number) {
@@ -167,93 +260,51 @@ export class RegistarAlumnoComponent {
   }
 
 
+  uploadDocuments(idStudent: any) {
 
-  getStepperOrientation(): StepperOrientation {
-
-    console.log("get ", this.orientation)
-    return this.orientation;
-  }
-
-
-  getStudents() {
+    if (this.fileDocument == null || this.fileVac == null) {
+      Swal.fire({
+        title: 'Error!',
+        text: "Error debe cargar los 2 documentos",
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+      return;
+    }
+    console.log("idstduene", idStudent)
     const formData = new FormData();
-    formData.append("idRepre", this.sesion.id)
-    this.repreService.getStudents(formData).subscribe((data: any) => {
-      this.dataSource = new MatTableDataSource(data);
-      console.log(this.dataSource);
-    }
-    );
-  }
 
-
-
-  openDialog() {
-    const dialogRef = this.dialog.open(RegisterComponent, {
-      data: { bandera: "newstudent", idRepre: this.sesion.id, rol: "student" },
-      panelClass: 'glassbox', disableClose: true
-    });
-    dialogRef.componentInstance.eventoHijo.subscribe(() => {
-      // Llamar al método o proceso en el componente padre
+    formData.append('fileDoc', this.fileDocument);
+    formData.append('fileVac', this.fileVac);
+    formData.append('iduser', idStudent);
+    this.publicServices.uploadDocMatricula(formData).subscribe((data: any) => {
       this.getStudents();
-    });
-  }
-  modalRegister() {
-    this._opennu = true
-  }
-
-  addUser(name: any, ape: any, correo: any, pass: any, whatsapp: any, documento: any) {
-    this.user = {
-      id: documento,
-      name: name,
-      ape: ape,
-      pass: pass,
-      usser: correo,
-      whatsapp: whatsapp,
-      activo: true,
-      rol: '',
-      img: '',
-      idRepre: undefined
-    }
-  }
-
-  cargarStudent(){
-
-  
-
-
-    this.commitStudent = localStorage.getItem("commitStudent")
-    if (this.commitStudent!!) {
-      this.commitStudent = JSON.parse(this.commitStudent)
-    }
-
-    this.publicServices.addUser(this.commitStudent).subscribe((data: any) => {
-      localStorage.removeItem('commitStudent');
-      
-console.log(data)
       Swal.fire(
         'Exito!',
-        'Su cuenta es creada!',
+        'Documentos cargados!',
         'success'
-      ).then(() => {
-        
-        this.upload(data.mensaje.id);
-        // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        //   this.router.onSameUrlNavigation = 'reload';
-        //   this.router.navigate(["/"+this.data.ruta])
-      })
-
+      )
     }, (error: Error) => {
-      Swal.fire({
-        icon: 'error',
-        title: "Ha ocurrido un error",
-        text: error.message,
-      }).then(() => {
 
-      })
+      console.log(error.message)
     }, () => { }
     );
   }
 
+  uploadPhotoProfile() {
+    const formData = new FormData();
+    formData.append('file', this.filePhoto);
+    formData.append('iduser', this.user?.id);
+
+    this.publicServices.uploadImgPerfil(formData).subscribe((data: any) => {
+
+      console.log("document cargadoi")
+    }, (error: Error) => {
+
+      console.log("document no cargado")
+    }, () => { }
+    );
+  }
 
 
 

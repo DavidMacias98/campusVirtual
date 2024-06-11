@@ -19,6 +19,7 @@ public interface CuentaService {
 	Object cambiarContrasena(Long id , String actual, String nueva, String repetir)throws Exception;
 	
 	WebUser findById(Long id)throws Exception;
+	WebUser findByDocument(String document)throws Exception;
 	List<WebUser> getStudentByRepre(Long id)throws Exception;
 	List<?> getStudentByRepreToMatricula(Long id)throws Exception;
 	//WebUserAddress addAddress (WebUserAddress address)throws Exception;
@@ -35,6 +36,7 @@ public interface CuentaService {
 	List<?> GetAllByRol()throws Exception;
 	List<?> getColabsToCurso()throws Exception;
 
+	
 	
 	Object validateStudent(Long idStudent, Long idLastCurso)throws Exception;
 	

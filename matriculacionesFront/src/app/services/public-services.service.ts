@@ -104,7 +104,6 @@ export class PublicServicesService {
   let data=this.http.post<Array<any>>( API_SERVER,param,httpOptions).pipe(
     catchError(this.handleError))
    console.log(data)
-  
    return data
   }
 
@@ -134,6 +133,23 @@ export class PublicServicesService {
   };
    //const service = this.dataObj.restAPI.filter((m: any) => m.name === 'Paises')[0];
   let data=this.http.post<Array<any>>( API_SERVER,httpOptions).pipe(
+    catchError(this.handleError))
+   console.log(data)
+  
+   return data
+  }
+
+  validatedStudent(param:any): Observable<Array<any>> {
+    const API_SERVER =  environment.URL_BASE +'/public/get/studentByDocument';
+   const headers: any ={
+     "Authorization": 'Bearer ' 
+  };
+  //Post options pass it to HttpHeaders Class 
+   const httpOptions = {
+      headers: new HttpHeaders(headers),
+  };
+   //const service = this.dataObj.restAPI.filter((m: any) => m.name === 'Paises')[0];
+  let data=this.http.post<Array<any>>( API_SERVER,param,httpOptions).pipe(
     catchError(this.handleError))
    console.log(data)
   

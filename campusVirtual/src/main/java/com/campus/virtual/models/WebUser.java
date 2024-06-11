@@ -47,6 +47,9 @@ public class WebUser implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	
+	@Column(name = "document" )
+	private String document;
+	
 	@Column(name = "name" )
 	private String name;
 	

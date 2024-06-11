@@ -63,7 +63,7 @@ public class PublicController {
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(new BadResponse(e.getMessage()));
 		}
-		return ResponseEntity.ok().body(new Response(response));
+		return ResponseEntity.ok().body(response);
 	}
 	
 	
@@ -147,7 +147,18 @@ public class PublicController {
 		return ResponseEntity.ok().body(response);
 	}
 	
-	
+	@PostMapping("public/get/studentByDocument")
+	public ResponseEntity<?> getStudentByDocument(@RequestParam String document) throws Exception {
+		Object response;
+		try {
+			response = this.cuentaService.findByDocument(document);
+			
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(new BadResponse(e.getMessage()));
+		}
+		
+		return ResponseEntity.ok().body(response);
+	}
 	
 	
 }

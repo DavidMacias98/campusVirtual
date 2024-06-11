@@ -16,8 +16,8 @@ spring:
 
 azure:
   storage:
-   
-    account-name: storagetesispotencia
+    
+    account-name: storagetesisug
     default-endpoints-protocol: https
     endpoint-suffix: core.windows.net
 

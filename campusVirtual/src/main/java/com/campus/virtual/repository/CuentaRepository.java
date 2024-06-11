@@ -14,6 +14,9 @@ public interface CuentaRepository extends JpaRepository<WebUser, Long>{
 	@Query("select u from WebUser u where u.usser = :usser")
 	WebUser findByUsser(String usser);
 	
+	@Query("select u from WebUser u where u.document = :document")
+	WebUser findByDocument(String document);
+	
 	@Query("select u from AdminUser u where u.usser = :usser")
 	AdminUser findByUsserAdmin(String usser);
 
