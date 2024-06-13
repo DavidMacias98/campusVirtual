@@ -57,17 +57,21 @@
 
         <div *ngIf="data.bandera!='newstudent'" style="margin-top: 5px; text-align: center; width: 100%; ">
 
-            <div class="container-input">
-                <input type="file" name="file-7" id="file-7" class="inputfile inputfile-7"
-                    (input)="onFilechange($event);" />
-                <label style="background-color: rgb(23, 50, 157); color: white; border-radius: 4px;" for="file-7"
-                    placeholder="Cargar Documento">
-                    <span class="iborrainputfile">{{nombredoc}}</span>
-                    <strong class="img-load">
-                        <img class="ico_load" src="/assets/images/investor/download.png" alt="">
-                    </strong>
-                </label>
-            </div>
+          
+
+            <div style="display: flex;  width:100%;  ">
+                <div class="container-input">
+                    <input type="file" name="filePhoto" id="filePhoto" class="inputfile inputfile-7"
+                        (input)="onFilechange($event);" />
+                    <label style="background-color:#0a4863ff; color: white; border-radius: 4px; width: 100%; "
+                        for="filePhoto" placeholder="Cargar foto de perfil">
+                        <span class="iborrainputfile">{{nombrePhoto}}</span>
+                        <div style="margin-left: 10px;" class="icoUpload"></div>
+                    </label>
+                </div>
+            </div>    
+
+
         </div>
             <mat-card-actions class="containerBtnRow">
                 <button (click)="addUser(name.value,ape.value,correo.value,pass.value,whatsapp.value,documento.value)"

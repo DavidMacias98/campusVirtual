@@ -32,10 +32,13 @@ export class RegistarAlumnoComponent {
   nombrePhoto: string = "Cargar foto de perfil"
   infoVigente = false
   terminosycondiciones = false;
-  studentValidator= false
+  studentValidator = false
 
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
+    firstApeCtrl: ['', Validators.required],
+    CorreoCtrl: ['', Validators.required],
+    PassCtrl: ['', Validators.required],
   });
 
   @ViewChild('stepper') stepper!: MatStepper;
@@ -91,24 +94,24 @@ export class RegistarAlumnoComponent {
 
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   getStepperOrientation(): StepperOrientation {
 
     console.log("get ", this.orientation)
     return this.orientation;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   getStudents() {
@@ -213,6 +216,23 @@ export class RegistarAlumnoComponent {
 
 
 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
   onFile(event: any, doc: number) {
     console.log(event.target.files[0]);
     /*  if (event.target.files[0].type != "application/pdf"
@@ -245,13 +265,19 @@ export class RegistarAlumnoComponent {
         // event.target.files[0].name= this.CurrentUser?.id+"documento";
         this.nombreDocIde = this.fileDocument!.name;
 
-        console.log(event.currentTarget.files);
+       
         break;
       case 1:
         this.fileVac = event.target.files[0];
         // event.target.files[0].name= this.CurrentUser?.id+"vacuna";
         this.nombreDocVac = this.fileVac!.name;
-        console.log(event.currentTarget.files);
+    
+        break;
+      case 2:
+        this.filePhoto = event.target.files[0];
+        // event.target.files[0].name= this.CurrentUser?.id+"vacuna";
+        this.nombrePhoto = this.filePhoto!.name;
+       
         break;
     }
 

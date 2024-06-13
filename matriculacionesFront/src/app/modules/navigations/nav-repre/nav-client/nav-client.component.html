@@ -5,8 +5,8 @@
         <nav>
             <div class="cco" style="display: flex; flex-direction: row; width: 100%;">
 
-                <li style="display: flex; justify-content: flex-start;width: 25%;">
-                    <a> <button style="background-color:  #a7c5e9;"mat-raised-button (click)="drawer.toggle()">
+                <li style="display: flex; justify-content: flex-start;width: 80%;">
+                    <a> <button style="background-color:  #a7c5e9;" mat-raised-button (click)="drawer.toggle()">
                             Menu
                         </button>
                     </a>
@@ -16,16 +16,20 @@
 
 
 
-                <li style="display: flex; justify-content: center; width: 50%; margin-top: 10px; margin-right: 10px;">
-                    <button class="" style="background-color:  orange; " mat-raised-button> MODULO DE REPRESENTANTE
+
+
+
+
+                <li style="display: flex; justify-content: flex-end; width: 20%; margin-top: 10px; margin-right: 10px; gap: 10px;">
+                    <button style="background-color:  #a7c5e9;" mat-raised-button [matMenuTriggerFor]="menu"> Bienvenido
+                        {{sesion.name}}
                     </button>
-                </li>
-
-
-
-                <li style="display: flex; justify-content: flex-end; width: 20%; margin-top: 10px; margin-right: 10px;">
-                    <button style="background-color:  #a7c5e9;" mat-raised-button [matMenuTriggerFor]="menu"> HOLA
-                        {{sesion.name}} </button>
+                    
+                    <mat-card-header>
+                        <div style="width: 45px;" [matMenuTriggerFor]="menu" mat-card-avatar>
+                            <img style=" border-radius: 20px; " src={{sesion.imgPerfi}} alt="">
+                        </div>
+                    </mat-card-header>
                     <mat-menu #menu="matMenu">
                         <button (click)="openModalCambiarContra()" mat-menu-item>Cambiar clave</button>
                         <button (click)="cerrarSesion()" mat-menu-item>Cerrar sesion</button>

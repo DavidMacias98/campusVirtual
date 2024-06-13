@@ -23,7 +23,7 @@ export interface User {
   whatsapp: any;
   activo: boolean;
   rol: string;
-  img: string;
+  imgPerfi: string;
   idRepre: any
 }
 
@@ -39,8 +39,8 @@ export class RegisterComponent {
   activeRolAdmin:any=false
   CurrentUser: any
   user!: User
-  file?: any;
-  nombredoc: string = "Cargar foto"
+  filePhoto: any
+  nombrePhoto: string = "Cargar foto de perfil"
   selectedRol:any
   docente:any="docente"
   agente:any="agente"
@@ -78,7 +78,7 @@ export class RegisterComponent {
       whatsapp: whatsapp,
       activo: true,
       rol: '',
-      img: '',
+      imgPerfi: '',
       idRepre: undefined
     }
 
@@ -103,7 +103,7 @@ export class RegisterComponent {
   }
 
   addWebUser() {
-    if (this.file == null && this.data.bandera != 'newstudent') {
+    if (this.filePhoto == null && this.data.bandera != 'newstudent') {
       Swal.fire({
         title: 'Error!',
         text: "Imagen de perfil requerido",
@@ -212,8 +212,8 @@ export class RegisterComponent {
       });
       return;
     }
-    this.file = event.target.files[0];
-    this.nombredoc = this.user?.id + "documento";
+    this.filePhoto = event.target.files[0];
+    this.nombrePhoto = this.filePhoto!.name;
     console.log(event.currentTarget.files);
     event.target.value = '';
     return;
@@ -224,7 +224,7 @@ export class RegisterComponent {
   uploadDocument() {
 
     const formData = new FormData();
-    formData.append('file', this.file);
+    formData.append('file', this.filePhoto);
     formData.append('iduser', this.user?.id);
 
     this.publicServices.uploadImgPerfil(formData).subscribe((data: any) => {

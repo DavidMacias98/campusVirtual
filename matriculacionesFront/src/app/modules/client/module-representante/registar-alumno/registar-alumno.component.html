@@ -6,7 +6,7 @@
 <div class="column">
     <mat-stepper  [linear]="isLinear" [orientation]="getStepperOrientation()" [linear]="isLinear" #stepper  [animationDuration]="'2000'">
         <!-- Contenido de los pasos -->
-        <mat-step >
+        <mat-step  [stepControl]="firstFormGroup">
             
                 <ng-template matStepLabel>REGISTRO DE ESTUDIANTE</ng-template>
 
@@ -18,24 +18,24 @@
                 <div>
                     <mat-form-field class="example-full-width">
                         <mat-label>Numero de documento</mat-label>
-                        <input #documento type="number" matInput placeholder="">
+                        <input  #documento type="number" matInput placeholder="">
                     </mat-form-field> 
 
                     <button *ngIf="!studentValidator" mat-raised-button (click)="validarStudent(documento.value)" > validar</button>
 
                 </div>
 
-                <form  *ngIf="studentValidator" class="example-form column">
+                <form [formGroup]="firstFormGroup" *ngIf="studentValidator" class="example-form column">
 
                     <div class="row">
                         <mat-form-field class="example-full-width">
                             <mat-label>Nombres</mat-label>
-                            <input #name type="text" matInput placeholder=""   required>
-                        </mat-form-field>
+                            <input #name type="text" matInput placeholder="" formControlName="firstCtrl" required  >
+                        </mat-form-field>   
 
                         <mat-form-field class="example-full-width">
                             <mat-label>Apellidos</mat-label>
-                            <input #ape type="text" matInput placeholder="">
+                            <input #ape type="text" matInput placeholder="" formControlName="firstApeCtrl" required >
                         </mat-form-field>
 
 
@@ -43,12 +43,12 @@
                     <div class="row">
                         <mat-form-field class="example-full-width">
                             <mat-label>Correo</mat-label>
-                            <input #correo type="email" matInput placeholder="">
+                            <input #correo type="email" matInput placeholder="" formControlName="CorreoCtrl" required >
                         </mat-form-field>
 
                         <mat-form-field class="example-full-width">
                             <mat-label>Contraseña</mat-label>
-                            <input #pass type="password" matInput placeholder="">
+                            <input #pass type="password" matInput placeholder=""formControlName="PassCtrl" required  >
                         </mat-form-field>
                     </div>
 
@@ -75,10 +75,10 @@
                 <form class="">
                     <div style="display: flex; width:100%; ">
                         <div class="container-input">
-                            <input type="file" name="file-7" id="file-7" class="inputfile inputfile-7"
+                            <input type="file" name="fileDocument" id="fileDocument" class="inputfile inputfile-7"
                                 (input)="onFile($event,0);" />
                             <label style="background-color:#0a4863ff; color: white; border-radius: 4px; width: 100%; "
-                                for="file-7" placeholder="Cargar Documento">
+                                for="fileDocument" placeholder="Cargar Documento">
                                 <span class="iborrainputfile">{{nombreDocIde}}</span>
                                 <div style="margin-left: 10px;" class="icoUpload"></div>
 
@@ -101,10 +101,10 @@
 
                     <div style="display: flex;  width:100%;  ">
                         <div class="container-input">
-                            <input type="file" name="fileVac" id="fileVac" class="inputfile inputfile-7"
-                                (input)="onFile($event,1);" />
+                            <input type="file" name="filePhoto" id="filePhoto" class="inputfile inputfile-7"
+                                (input)="onFile($event,2);" />
                             <label style="background-color:#0a4863ff; color: white; border-radius: 4px; width: 100%; "
-                                for="fileVac" placeholder="Cargar foto de perfil">
+                                for="filePhoto" placeholder="Cargar foto de perfil">
                                 <span class="iborrainputfile">{{nombrePhoto}}</span>
                                 <div style="margin-left: 10px;" class="icoUpload"></div>
                             </label>

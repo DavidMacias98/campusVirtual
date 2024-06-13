@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.component';
 import { LoadingComponent } from './loading/loading.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { LoadingComponent } from './loading/loading.component';
     MatFormFieldModule, MatSelectModule, MatButtonModule,
     HttpClientModule,
     FormsModule,  ReactiveFormsModule, NgIf,
-     
+    MatCardModule
 
   ],exports:[
     GlobalNavComponent,
